@@ -1,13 +1,5 @@
-def mcd(a, b):
-
-    if a < b:
-        divisor = a
-        dividend = b
-
-    else: 
-        divisor = b
-        dividend = a
-
+def mcd(divisor, dividend):
+    
     rest = divisor
     while rest != 0:
 
