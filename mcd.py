@@ -1,14 +1,14 @@
 def mcd(divisor, dividend):
 
-    rest = divisor
-    while rest != 0:
+    modulo = divisor
+    while modulo != 0:
 
-        resg_rest = dividend % divisor
-        resg_dividend = dividend // divisor
+        modulo = dividend % divisor
+        resultado = dividend // divisor
 
-        if resg_rest != 0:
-            divisor = resg_rest
-            rest = resg_dividend
+        if modulo != 0:
+            divisor = modulo
+            dividend = divisor
         else:
             return(divisor)
 
