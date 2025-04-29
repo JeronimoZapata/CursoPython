@@ -1,14 +1,4 @@
-def prime(n):
-
-    if n < 1:
-        return False
-    for i in range(2, n):
-        if n % i == 0:
-            return False
-
-    return True
-
-def is_prime_sieve(n: int) -> bool:
+def is_prime_sieve(n: int) -> list:
     """
     Devuelve True si n es primo, False en caso contrario,
     usando la Criba de Eratóstenes construida hasta n.
@@ -17,9 +7,9 @@ def is_prime_sieve(n: int) -> bool:
         return True
 
     # Inicializa la criba
-    is_prime = [True] * (n + 1)
+    is_prime = [True] * (n + 1) #hace una lista de booleanos
     is_prime[0] = False
-    is_prime[1] = False
+    is_prime[1] = True # aca decia False (pero en este caso a nosotros nos sirve que 1 sea primo)
 
     # Solo necesitamos marcar hasta sqrt(n)
     limit = int(n**0.5)
@@ -30,4 +20,6 @@ def is_prime_sieve(n: int) -> bool:
                 is_prime[multiple] = False
 
     # El valor en la posición n indica si n es primo
-    return is_prime[n]
+    return is_prime # aca decia is_prime[n] y lo saque
+
+#print (is_prime_sieve(561))
