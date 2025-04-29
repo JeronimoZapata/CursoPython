@@ -3,7 +3,9 @@ import SchönhageStrassen
 import cribaerastotenes
 import prime
 import mcd
+from decorators import delta_time
 
+@delta_time("GRUPO BIG BRAIN 🧠")
 def carmichel(x, y):
 
     ls_carmichael = []
