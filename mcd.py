@@ -5,6 +5,3 @@ def mcd(a, b):
         # a = b
         # b = a % b
     return a
-
-#print(mcd(543210,987654))
-#este me dio chat gpt y lo estoy probando (gonza)

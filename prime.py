@@ -21,5 +21,3 @@ def is_prime_sieve(n: int) -> list:
 
     # El valor en la posición n indica si n es primo
     return is_prime # aca decia is_prime[n] y lo saque
-
-#print (is_prime_sieve(561))
