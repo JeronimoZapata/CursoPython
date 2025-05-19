@@ -2,48 +2,30 @@ import fermat
 import prime
 import mcd
 from decorators import delta_time
+import multiprocessing
+from multiprocessing import Pool
 
-def modular_exp(base, exp, mod):
-    if exp == 0:
-        return 1
-    if exp == 1:
-        return base % mod
-    
-    temp = modular_exp(base, exp // 2, mod)
-    temp = (temp * temp) % mod
-    
-    if exp % 2 == 1:
-        temp = (temp * base) % mod
-    
-    return temp
-
-@delta_time("GRUPO BIG BRAIN 🧠")
-def carmichel(x, y):
+def process_chunk(args):
+    start, end, primes = args
     ls_carmichael = []
-    list_prim = prime.is_prime_sieve(y)
     
-    for num in range(x, y + 1):
-        if not list_prim[num]:  # Si no es primo
-            # Optimización: Solo necesitamos probar hasta la raíz cuadrada del número
-            # más algunas bases adicionales para garantizar la corrección
-            limit = int(num ** 0.5) + 1
+    for num in range(start, end + 1):
+        if not primes[num]:  # Si no es primo
+            raiz_cuadrada = int(num ** 0.5) + 1
             is_carmichael = True
             
-            # Probamos bases pequeñas primero
-            test_bases = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-            for base in test_bases:
-                if base >= num:
-                    break
+            # Probamos bases pequeñas primero para fallar rápido
+            for base in range(2, min(31, num)):
                 if mcd.mcd(base, num) == 1:
-                    if modular_exp(base, num-1, num) != 1:
+                    if fermat.fermat(base, num-1, num) != 1:
                         is_carmichael = False
                         break
             
-            # Si pasa las bases pequeñas, probamos algunas bases adicionales
+            # Si pasa las bases pequeñas, probamos hasta la raíz cuadrada
             if is_carmichael:
-                for base in range(31, min(limit, num), 2):
+                for base in range(31, min(raiz_cuadrada, num)):
                     if mcd.mcd(base, num) == 1:
-                        if modular_exp(base, num-1, num) != 1:
+                        if fermat.fermat(base, num-1, num) != 1:
                             is_carmichael = False
                             break
             
@@ -51,6 +33,38 @@ def carmichel(x, y):
                 ls_carmichael.append(num)
     
     return ls_carmichael
+
+@delta_time("GRUPO BIG BRAIN")
+def carmichel(x, y):
+    # Calculamos la criba de primos una sola vez
+    list_prim = prime.is_prime_sieve(y)
+    
+    # Determinamos el número de cores a usar (dejamos uno libre para el sistema)
+    num_cores = max(1, multiprocessing.cpu_count() - 1)
+    print('num_cores ', num_cores)
+    
+    # Calculamos el tamaño de cada chunk
+    chunk_size = (y - x + 1) // num_cores
+    if chunk_size < 10000:  # Si los chunks son muy pequeños, no vale la pena paralelizar
+        return process_chunk((x, y, list_prim))
+    
+    # Preparamos los argumentos para cada proceso
+    chunks = []
+    for i in range(num_cores):
+        start = x + i * chunk_size
+        end = start + chunk_size - 1 if i < num_cores - 1 else y
+        chunks.append((start, end, list_prim))
+    
+    # Creamos el pool de procesos y ejecutamos en paralelo
+    with Pool(num_cores) as pool:
+        results = pool.map(process_chunk, chunks)
+    
+    # Combinamos los resultados de todos los procesos
+    ls_carmichael = []
+    for result in results:
+        ls_carmichael.extend(result)
+    
+    return sorted(ls_carmichael)
 
 if __name__ == "__main__":
     print(carmichel(1, 1000000))
