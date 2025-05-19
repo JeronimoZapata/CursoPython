@@ -3,19 +3,6 @@ import prime
 import mcd
 from decorators import delta_time
 
-def modular_exp(base, exp, mod):
-    if exp == 0:
-        return 1
-    if exp == 1:
-        return base % mod
-    
-    temp = modular_exp(base, exp // 2, mod)
-    temp = (temp * temp) % mod
-    
-    if exp % 2 == 1:
-        temp = (temp * base) % mod
-    
-    return temp
 
 @delta_time("GRUPO BIG BRAIN 🧠")
 def carmichel(x, y):
@@ -35,15 +22,15 @@ def carmichel(x, y):
                 if base >= num:
                     break
                 if mcd.mcd(base, num) == 1:
-                    if modular_exp(base, num-1, num) != 1:
+                    if fermat.fermat(base, num-1, num) != 1:
                         is_carmichael = False
                         break
             
             # Si pasa las bases pequeñas, probamos algunas bases adicionales
             if is_carmichael:
-                for base in range(31, min(limit, num), 2):
+                for base in range(31, min(limit, num), 1):
                     if mcd.mcd(base, num) == 1:
-                        if modular_exp(base, num-1, num) != 1:
+                        if fermat.fermat(base, num-1, num) != 1:
                             is_carmichael = False
                             break
             
