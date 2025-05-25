@@ -19,14 +19,14 @@ def carmichel(x, y):
                 if base >= num:
                     break
                 if mcd.mcd(base, num) == 1:
-                    if fermat.fermat(base, num-1, num) != 1:
+                    if pow(base, num-1, num) != 1:
                         is_carmichael = False
                         break
 
             if is_carmichael:
-                for base in range(1, min(limit, num), 1):
+                for base in range(1, limit, 1):
                     if base not in test_bases and mcd.mcd(base, num) == 1:
-                        if fermat.fermat(base, num-1, num) != 1:
+                        if pow(base, num-1, num) != 1:
                             is_carmichael = False
                             break
             
