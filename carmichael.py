@@ -8,7 +8,7 @@ def is_prime_sieve(n: int) -> list:
     is_prime[0] = False
     is_prime[1] = True
 
-    for p in range(2, n + 1):
+    for p in range(2, int(n ** 0.5) + 1):
         if is_prime[p]:
             for multiple in range(p * p, n + 1, p):
                 is_prime[multiple] = False
@@ -51,7 +51,7 @@ def coprime_list(n: int) -> list[int]:
 test_bases_list = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
 test_bases_set = set(test_bases_list)  
 
-@delta_time("GRUPO BIG BRAIN 🧠")
+@delta_time("GRUPO BIG BRAIN CON 🧠")
 def carmichel(x, y):
     ls_carmichael = []
     list_prim = is_prime_sieve(y)
