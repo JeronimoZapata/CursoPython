@@ -1,3 +1,5 @@
+#este es el que entregamos pero con los comentarios
+
 from decorators import delta_time
 
 def is_prime_sieve(n: int) -> list:
