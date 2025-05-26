@@ -1,3 +1,5 @@
+#a diferencia del que entregamos le sacamos varios if y aparte ordenamos
+
 #import fermat
 import prime
 import mcd
