@@ -1,3 +1,5 @@
+#esta funcion tampoco directamente no la usamos, quedo en el camino
+
 def is_square_free(n):
     """Devuelve False si n tiene algún factor primo al cuadrado"""
     i = 2
