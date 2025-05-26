@@ -20,10 +20,10 @@ def is_prime_sieve(n: int) -> list:
     #En tiempos modernos, esta propiedad es un resultado básico que se enseña en introducciones a la teoría de números, por ejemplo, en libros como:
         #Elementary Number Theory de David M. Burton
         #An Introduction to the Theory of Numbers de Hardy & Wright
-    raiz = int(n**0.5)
-    for p in range(2, raiz + 1):
+    limit = int(n**0.5)
+    for p in range(2, limit + 1):
         if is_prime[p]:
-            # Marca múltiplos de p como no primos
+            # Marca múltiplos de p como False(numeros no primos)
             for multiple in range(p * p, n + 1, p):
                 is_prime[multiple] = False
 
@@ -39,7 +39,7 @@ def mcd(a, b):
         # b = a % b
     return a # El último valor no nulo de a es el MCD
 
-@delta_time("BIG BRAIN alejito pro")
+@delta_time("GRUPO BIG BRAIN")
 def carmichel(x, y):
     ls_carmichael = []
     list_prim = is_prime_sieve(y) # Generamos lista de primos hasta el numero mas grande
