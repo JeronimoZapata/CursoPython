@@ -1,3 +1,5 @@
+#esto ni usamos al final lo reemplazamos por POW
+
 def fermat(a, e, n):
     # Calcula a^e mod n usando exponenciación rápida
     resultado = 1
